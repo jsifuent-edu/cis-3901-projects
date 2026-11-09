@@ -91,34 +91,6 @@
     "text": "8. AI-use statement\nState whether and how you used AI tools, following the course policy."
   },
   {
-    "objectID": "example/penguins_slides.html#gentoo-flippers-average-2127-mm-longer-than-the-rest",
-    "href": "example/penguins_slides.html#gentoo-flippers-average-2127-mm-longer-than-the-rest",
-    "title": "Do penguin species differ in flipper length?",
-    "section": "Gentoo flippers average 21–27 mm longer than the rest",
-    "text": "Gentoo flippers average 21–27 mm longer than the rest\n\n\nFigure 1: Flipper length by species. Each point is one penguin; each box shows the middle half of a species, and the line inside it is the median."
-  },
-  {
-    "objectID": "example/penguins_slides.html#what-this-does-and-doesnt-show",
-    "href": "example/penguins_slides.html#what-this-does-and-doesnt-show",
-    "title": "Do penguin species differ in flipper length?",
-    "section": "What this does and doesn’t show",
-    "text": "What this does and doesn’t show\n\nIt shows differences in flipper length between three species.\nThese are 344 penguins measured on 3 islands near Palmer Station, Antarctica, in 2007–2009; 2 have no flipper measurement.\nData source: Horst, A. M., Hill, A. P., & Gorman, K. B. (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data (R package). https://allisonhorst.github.io/palmerpenguins/ License: CC0."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CIS-3901 Projects",
-    "section": "",
-    "text": "This site holds my reports and slides for the CIS-3901 Challenge Projects (Fairness Data and Sports Data).\nReplace Your Name and this paragraph with your own.\n\nReports: Fairness Data report · Sports Data report\nSlides: Fairness Data slides · Sports Data slides\nExample: penguin report · penguin slides"
-  },
-  {
-    "objectID": "example/penguins_report.html",
-    "href": "example/penguins_report.html",
-    "title": "Do penguin species differ in flipper length?",
-    "section": "",
-    "text": "Code: read the data and compute the numbers\nlibrary(tidyverse)\n\npenguins &lt;- read_csv(\"../data/example/penguins.csv\", show_col_types = FALSE)\n\n# Mean flipper length per species (2 penguins have no measurement)\nflipper_means &lt;- penguins %&gt;%\n  filter(!is.na(flipper_length_mm)) %&gt;%\n  group_by(species) %&gt;%\n  summarise(mean_mm = mean(flipper_length_mm))\n\nmean_of &lt;- function(sp) flipper_means %&gt;% filter(species == sp) %&gt;% pull(mean_mm)\ngentoo_vs_chinstrap_mm &lt;- mean_of(\"Gentoo\") - mean_of(\"Chinstrap\")\ngentoo_vs_adelie_mm &lt;- mean_of(\"Gentoo\") - mean_of(\"Adelie\")\n\nn_penguins &lt;- nrow(penguins)\nn_islands &lt;- n_distinct(penguins$island)\nn_no_flipper &lt;- sum(is.na(penguins$flipper_length_mm))\nfirst_year &lt;- min(penguins$year)\nlast_year &lt;- max(penguins$year)\n\n\n\n\nCode: make the figure\nset.seed(3901)  # same jitter on every render\npenguins %&gt;%\n  filter(!is.na(flipper_length_mm)) %&gt;%\n  ggplot(aes(x = species, y = flipper_length_mm, color = species)) +\n  geom_boxplot(outlier.shape = NA, width = 0.5) +\n  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5) +\n  scale_color_viridis_d(end = 0.7) +\n  labs(\n    title = \"Gentoo penguins have the longest flippers\",\n    x = \"Species\",\n    y = \"Flipper length (mm)\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\nFigure 1: Flipper length by species. Each point is one penguin; each box shows the middle half of a species, and the line inside it is the median.\n\n\n\n\n\nFinding. Gentoo penguins have the longest flippers, on average about 21 mm longer than Chinstrap and 27 mm longer than Adelie penguins.\nLimitation. These are 344 penguins measured on 3 islands near Palmer Station, Antarctica, in 2007–2009; 2 have no flipper measurement.\nData source. Horst, A. M., Hill, A. P., & Gorman, K. B. (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data (R package). https://allisonhorst.github.io/palmerpenguins/ License: CC0."
-  },
-  {
     "objectID": "reports/fairness_report.html",
     "href": "reports/fairness_report.html",
     "title": "Fairness Data report: your title here",
@@ -180,6 +152,83 @@
     "title": "Fairness Data report: your title here",
     "section": "8. AI-use statement",
     "text": "8. AI-use statement\nState whether and how you used AI tools, following the course policy."
+  },
+  {
+    "objectID": "example/penguins_report.html",
+    "href": "example/penguins_report.html",
+    "title": "Do penguin species differ in flipper length?",
+    "section": "",
+    "text": "Code: read the data and compute the numbers\nlibrary(tidyverse)\n\npenguins &lt;- read_csv(\"../data/example/penguins.csv\", show_col_types = FALSE)\n\n# Mean flipper length per species (2 penguins have no measurement)\nflipper_means &lt;- penguins %&gt;%\n  filter(!is.na(flipper_length_mm)) %&gt;%\n  group_by(species) %&gt;%\n  summarise(mean_mm = mean(flipper_length_mm))\n\nmean_of &lt;- function(sp) flipper_means %&gt;% filter(species == sp) %&gt;% pull(mean_mm)\ngentoo_vs_chinstrap_mm &lt;- mean_of(\"Gentoo\") - mean_of(\"Chinstrap\")\ngentoo_vs_adelie_mm &lt;- mean_of(\"Gentoo\") - mean_of(\"Adelie\")\n\nn_penguins &lt;- nrow(penguins)\nn_islands &lt;- n_distinct(penguins$island)\nn_no_flipper &lt;- sum(is.na(penguins$flipper_length_mm))\nfirst_year &lt;- min(penguins$year)\nlast_year &lt;- max(penguins$year)\n\n\n\n\nCode: make the figure\nset.seed(3901)  # same jitter on every render\npenguins %&gt;%\n  filter(!is.na(flipper_length_mm)) %&gt;%\n  ggplot(aes(x = species, y = flipper_length_mm, color = species)) +\n  geom_boxplot(outlier.shape = NA, width = 0.5) +\n  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5) +\n  scale_color_viridis_d(end = 0.7) +\n  labs(\n    title = \"Gentoo penguins have the longest flippers\",\n    x = \"Species\",\n    y = \"Flipper length (mm)\"\n  ) +\n  theme_minimal(base_size = 14) +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\nFigure 1: Flipper length by species. Each point is one penguin; each box shows the middle half of a species, and the line inside it is the median.\n\n\n\n\n\nFinding. Gentoo penguins have the longest flippers, on average about 21 mm longer than Chinstrap and 27 mm longer than Adelie penguins.\nLimitation. These are 344 penguins measured on 3 islands near Palmer Station, Antarctica, in 2007–2009; 2 have no flipper measurement.\nData source. Horst, A. M., Hill, A. P., & Gorman, K. B. (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data (R package). https://allisonhorst.github.io/palmerpenguins/ License: CC0."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CIS-3901 Projects",
+    "section": "",
+    "text": "This site holds my reports and slides for the CIS-3901 Challenge Projects (Fairness Data and Sports Data).\nReplace Your Name and this paragraph with your own.\n\nReports: Fairness Data report · Sports Data report\nSlides: Fairness Data slides · Sports Data slides\nExample: penguin report · penguin slides"
+  },
+  {
+    "objectID": "example/penguins_slides.html#gentoo-flippers-average-2127-mm-longer-than-the-rest",
+    "href": "example/penguins_slides.html#gentoo-flippers-average-2127-mm-longer-than-the-rest",
+    "title": "Do penguin species differ in flipper length?",
+    "section": "Gentoo flippers average 21–27 mm longer than the rest",
+    "text": "Gentoo flippers average 21–27 mm longer than the rest\n\n\nFigure 1: Flipper length by species. Each point is one penguin; each box shows the middle half of a species, and the line inside it is the median."
+  },
+  {
+    "objectID": "example/penguins_slides.html#what-this-does-and-doesnt-show",
+    "href": "example/penguins_slides.html#what-this-does-and-doesnt-show",
+    "title": "Do penguin species differ in flipper length?",
+    "section": "What this does and doesn’t show",
+    "text": "What this does and doesn’t show\n\nIt shows differences in flipper length between three species.\nThese are 344 penguins measured on 3 islands near Palmer Station, Antarctica, in 2007–2009; 2 have no flipper measurement.\nData source: Horst, A. M., Hill, A. P., & Gorman, K. B. (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data (R package). https://allisonhorst.github.io/palmerpenguins/ License: CC0."
+  },
+  {
+    "objectID": "reports/gp12_report.html",
+    "href": "reports/gp12_report.html",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "",
+    "text": "WRITE: Name your Fairness dataset and your Sports dataset. For each: what one row is, how many rows, and where the data come from (cite them in References).\n\nput_in_place(\"fairness.csv\", \"data/tidy\")\nput_in_place(\"sports.csv\", \"data/sports\")\n\nfairness &lt;- read_csv(\"data/tidy/fairness.csv\", show_col_types = FALSE)\nsports &lt;- read_csv(\"data/sports/sports.csv\", show_col_types = FALSE)\n\nif (looks_damaged(fairness) || looks_damaged(sports)) {\n  stop(\"One of your data files looks damaged (each row in one column): it \",\n       \"may have been re-saved by a spreadsheet app. Ask your instructor \",\n       \"for a fresh copy.\", call. = FALSE)\n}\n\n# Your columns\nglimpse(fairness)\n\nRows: 5,000\nColumns: 12\n$ person_id         &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…\n$ age               &lt;dbl&gt; 23, 30, 36, 66, 48, 18, 39, 19, 29, 26, 63, 74, 26, …\n$ sex               &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", \"Female\"…\n$ race              &lt;chr&gt; \"White alone\", \"White alone\", \"Two or More Races\", \"…\n$ marital_status    &lt;chr&gt; \"Never married or under 15 years old\", \"Married\", \"S…\n$ class_of_worker   &lt;chr&gt; \"Employee of a private for-profit company or busines…\n$ education         &lt;chr&gt; \"1 or more years of college credit, no degree\", \"Bac…\n$ occupation_code   &lt;dbl&gt; 9645, 800, 6200, 8990, 9130, 4720, 6230, 5740, 2310,…\n$ birthplace_code   &lt;dbl&gt; 37, 37, 11, 37, 37, 37, 37, 37, 329, 37, 37, 37, 37,…\n$ relationship_code &lt;dbl&gt; 0, 1, 16, 1, 1, 10, 0, 17, 1, 0, 0, 1, 0, 1, 12, 1, …\n$ hours_per_week    &lt;dbl&gt; 15, 45, 40, 40, 40, 30, 25, 40, 40, 40, 38, 5, 40, 6…\n$ income            &lt;dbl&gt; 1500, 52000, 25000, 21000, 27000, 2400, 6000, 2500, …\n\nglimpse(sports)\n\nRows: 33,289\nColumns: 7\n$ player_name   &lt;chr&gt; \"Kershaw, Clayton\", \"Kershaw, Clayton\", \"Kershaw, Clayto…\n$ pitch_type    &lt;chr&gt; \"SL\", \"FF\", \"FF\", \"SL\", \"FF\", \"SL\", \"CU\", \"FF\", \"SL\", \"S…\n$ result        &lt;chr&gt; \"X\", \"B\", \"B\", \"X\", \"X\", \"S\", \"X\", \"S\", \"X\", \"B\", \"S\", \"…\n$ release_speed &lt;dbl&gt; 90.4, 95.6, 95.2, 90.5, 95.6, 90.7, 74.5, 94.3, 91.6, 91…\n$ description   &lt;chr&gt; \"hit_into_play\", \"ball\", \"ball\", \"hit_into_play\", \"hit_i…\n$ count         &lt;chr&gt; \"2-0\", \"1-0\", \"0-0\", \"0-0\", \"0-1\", \"0-0\", \"0-1\", \"0-0\", …\n$ outs_when_up  &lt;dbl&gt; 2, 2, 2, 1, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0,…\n\n# PART A · FAIRNESS ==========================================================\n\n# A0 · Your group and your outcome ------------------------------------------\n# Session 1, slide 17: \"My outcome is ___. My group is ___.\"\n# YOUR TURN: replace \"replace me\" with your group column (no quotes), and\n# FALSE with a TRUE/FALSE condition for your outcome. Examples (use YOUR\n# columns; the Guided Project page lists them for every class dataset):\n#   group = sex,           has_outcome = income == \"&gt;50K\"\n#   group = age,           has_outcome = readmit_30_days == 1"
+  },
+  {
+    "objectID": "reports/gp12_report.html#my-data",
+    "href": "reports/gp12_report.html#my-data",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "",
+    "text": "WRITE: Name your Fairness dataset and your Sports dataset. For each: what one row is, how many rows, and where the data come from (cite them in References).\n\nput_in_place(\"fairness.csv\", \"data/tidy\")\nput_in_place(\"sports.csv\", \"data/sports\")\n\nfairness &lt;- read_csv(\"data/tidy/fairness.csv\", show_col_types = FALSE)\nsports &lt;- read_csv(\"data/sports/sports.csv\", show_col_types = FALSE)\n\nif (looks_damaged(fairness) || looks_damaged(sports)) {\n  stop(\"One of your data files looks damaged (each row in one column): it \",\n       \"may have been re-saved by a spreadsheet app. Ask your instructor \",\n       \"for a fresh copy.\", call. = FALSE)\n}\n\n# Your columns\nglimpse(fairness)\n\nRows: 5,000\nColumns: 12\n$ person_id         &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…\n$ age               &lt;dbl&gt; 23, 30, 36, 66, 48, 18, 39, 19, 29, 26, 63, 74, 26, …\n$ sex               &lt;chr&gt; \"Female\", \"Female\", \"Male\", \"Male\", \"Male\", \"Female\"…\n$ race              &lt;chr&gt; \"White alone\", \"White alone\", \"Two or More Races\", \"…\n$ marital_status    &lt;chr&gt; \"Never married or under 15 years old\", \"Married\", \"S…\n$ class_of_worker   &lt;chr&gt; \"Employee of a private for-profit company or busines…\n$ education         &lt;chr&gt; \"1 or more years of college credit, no degree\", \"Bac…\n$ occupation_code   &lt;dbl&gt; 9645, 800, 6200, 8990, 9130, 4720, 6230, 5740, 2310,…\n$ birthplace_code   &lt;dbl&gt; 37, 37, 11, 37, 37, 37, 37, 37, 329, 37, 37, 37, 37,…\n$ relationship_code &lt;dbl&gt; 0, 1, 16, 1, 1, 10, 0, 17, 1, 0, 0, 1, 0, 1, 12, 1, …\n$ hours_per_week    &lt;dbl&gt; 15, 45, 40, 40, 40, 30, 25, 40, 40, 40, 38, 5, 40, 6…\n$ income            &lt;dbl&gt; 1500, 52000, 25000, 21000, 27000, 2400, 6000, 2500, …\n\nglimpse(sports)\n\nRows: 33,289\nColumns: 7\n$ player_name   &lt;chr&gt; \"Kershaw, Clayton\", \"Kershaw, Clayton\", \"Kershaw, Clayto…\n$ pitch_type    &lt;chr&gt; \"SL\", \"FF\", \"FF\", \"SL\", \"FF\", \"SL\", \"CU\", \"FF\", \"SL\", \"S…\n$ result        &lt;chr&gt; \"X\", \"B\", \"B\", \"X\", \"X\", \"S\", \"X\", \"S\", \"X\", \"B\", \"S\", \"…\n$ release_speed &lt;dbl&gt; 90.4, 95.6, 95.2, 90.5, 95.6, 90.7, 74.5, 94.3, 91.6, 91…\n$ description   &lt;chr&gt; \"hit_into_play\", \"ball\", \"ball\", \"hit_into_play\", \"hit_i…\n$ count         &lt;chr&gt; \"2-0\", \"1-0\", \"0-0\", \"0-0\", \"0-1\", \"0-0\", \"0-1\", \"0-0\", …\n$ outs_when_up  &lt;dbl&gt; 2, 2, 2, 1, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0,…\n\n# PART A · FAIRNESS ==========================================================\n\n# A0 · Your group and your outcome ------------------------------------------\n# Session 1, slide 17: \"My outcome is ___. My group is ___.\"\n# YOUR TURN: replace \"replace me\" with your group column (no quotes), and\n# FALSE with a TRUE/FALSE condition for your outcome. Examples (use YOUR\n# columns; the Guided Project page lists them for every class dataset):\n#   group = sex,           has_outcome = income == \"&gt;50K\"\n#   group = age,           has_outcome = readmit_30_days == 1"
+  },
+  {
+    "objectID": "reports/gp12_report.html#part-a-fairness",
+    "href": "reports/gp12_report.html#part-a-fairness",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "Part A · Fairness",
+    "text": "Part A · Fairness\nMy group: WRITE: the column. My outcome: WRITE: the condition (for example, income == \"&gt;50K\").\nQuestion A: WRITE: “Of each ___ (group), what share has ___ (outcome)?” Question B: WRITE: “Of everyone with ___ (outcome), what share is each ___ (group)?”\n\nA0 · My group and my outcome\n\na_data &lt;- fairness %&gt;%\n  mutate(\n    group = \"replace me\",\n    has_outcome = FALSE\n  )\n\na_data %&gt;%\n  count(group, has_outcome) %&gt;%\n  print(n = Inf)\n\n# A tibble: 1 × 3\n  group      has_outcome     n\n  &lt;chr&gt;      &lt;lgl&gt;       &lt;int&gt;\n1 replace me FALSE        5000\n\n\n\n\nA1 · The rate within each group (question A)\n\na1 &lt;- ggplot(a_data, aes(y = group, fill = has_outcome)) +\n  geom_bar(position = \"fill\") +\n  labs(x = \"Share of the group\", y = NULL, fill = \"Has the outcome\")\n\nshow_plot(a1)\n\n\n\n\n\n\n\nFigure 1: Share of each group with the outcome.\n\n\n\n\n\nWRITE (2–3 sentences): Your prediction, then what the plot shows. Which group has the highest rate, and the lowest? Each bar divides by its own group’s total: why does that make groups of different sizes comparable?\n\n\nA2 · Rates with their standard error\n\na2_rates &lt;- a_data %&gt;%\n  drop_na(has_outcome) %&gt;%\n  group_by(group) %&gt;%\n  summarize(\n    n = n(),\n    rate = mean(has_outcome),\n    se = NA_real_\n  )\n\na2 &lt;- ggplot(a2_rates,\n             aes(x = rate, y = group,\n                 xmin = rate - se,\n                 xmax = rate + se)) +\n  geom_pointrange() +\n  # Many groups, and the labels touch the points? Keep every group, and use\n  # vjust = -0.8, size = 3 instead of nudge_y = 0.3.\n  geom_text(aes(label = paste(\"n =\", n)), nudge_y = 0.3) +\n  labs(x = \"Rate (share of the group with the outcome)\", y = NULL)\n\nshow_plot(a2)\n\n\n\n\n\n\n\nFigure 2: Rate in each group, with ± one standard error and the group size.\n\n\n\n\n\nWRITE (2–3 sentences): Which group’s range is widest? Look at its n. What does a small group’s wide range tell a reader? Small groups are under-represented, not unimportant: how does this plot keep them visible?\n\n\nA3 · Zoom or filter?\n\na3_table &lt;- a_data %&gt;%\n  count(group) %&gt;%\n  arrange(desc(n))\na3_table\n\n# A tibble: 1 × 2\n  group          n\n  &lt;chr&gt;      &lt;int&gt;\n1 replace me  5000\n\na3_start &lt;- 0\n\na3_counts &lt;- ggplot(a_data, aes(y = group)) +\n  geom_bar() +\n  labs(x = \"Count\", y = NULL)\n\na3_zoom &lt;- a3_counts +\n  coord_cartesian(xlim = c(a3_start, max(a3_table$n)), expand = FALSE)\n\n# A warning about removed rows here is expected (Session 2, slide 5).\na3_filter &lt;- a3_counts +\n  scale_x_continuous(limits = c(a3_start, max(a3_table$n)))\n\n# Lie Factor (Tufte, 2001, p. 57) of the zoomed plot, largest vs smallest\n# group: how many times the picture exaggerates the difference.\na3_largest &lt;- max(a3_table$n)\na3_smallest &lt;- min(a3_table$n)\na3_lie_factor &lt;-\n  ((a3_largest - a3_start) / (a3_smallest - a3_start)) /\n  (a3_largest / a3_smallest)\na3_lie_factor\n\n[1] 1\n\nshow_plot(a3_counts)\nshow_plot(a3_zoom)\nshow_plot(a3_filter)\n\n\n\n\n\n\n\n\n\n\n\n(a) From 0\n\n\n\n\n\n\n\n\n\n\n\n(b) Zoomed\n\n\n\n\n\n\n\n\n\n\n\n(c) Filtered\n\n\n\n\n\n\n\nFigure 3: Counts per group: from 0, zoomed and filtered.\n\n\n\n\nThe zoomed plot’s Lie Factor (largest vs smallest group) is 1.\nWRITE (3–4 sentences): What does each version show and hide? Explain the Lie Factor in your own words. Which version would you publish, and why?\n\n\nA4 · Each group’s share of everyone with the outcome (question B)\n\na4_shares &lt;- a_data %&gt;%\n  filter(has_outcome) %&gt;%\n  count(group) %&gt;%\n  mutate(share = n / sum(n))\n\na4 &lt;- ggplot(a4_shares, aes(x = share, y = group)) +\n  geom_col() +\n  labs(x = \"Share of everyone with the outcome\", y = NULL)\n\nshow_plot(a4)\n\n\n\n\n\n\n\nFigure 4: Each group’s share of everyone with the outcome.\n\n\n\n\n\nWRITE (2–3 sentences): Do question A (A1, A2) and question B (A4) point in the same direction? Why or why not? Which question does your Module 11 question need?"
+  },
+  {
+    "objectID": "reports/gp12_report.html#part-b-sports",
+    "href": "reports/gp12_report.html#part-b-sports",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "Part B · Sports",
+    "text": "Part B · Sports\nMy group, outcome and value: WRITE: the three columns or conditions.\n\nB0 · My group, outcome and value\n\nb_data &lt;- sports %&gt;%\n  mutate(\n    group = \"replace me\",\n    has_outcome = FALSE,\n    value = NA_real_\n  )\n\nb_data %&gt;%\n  count(group, has_outcome) %&gt;%\n  print(n = Inf)\n\n# A tibble: 1 × 3\n  group      has_outcome     n\n  &lt;chr&gt;      &lt;lgl&gt;       &lt;int&gt;\n1 replace me FALSE       33289\n\nsummary(b_data$value)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs \n     NA      NA      NA     NaN      NA      NA   33289 \n\n\n\n\nB1 · The rate within each group\n\nb1 &lt;- NULL\n\nshow_plot(b1)\n\nNot done yet.\n\n\nWRITE (2 sentences): What the plot shows, and why shares (not counts).\n\n\nB2 · A mean with its two spreads\n\nb2_summary &lt;- b_data %&gt;%\n  drop_na(value) %&gt;%\n  group_by(group) %&gt;%\n  summarize(\n    n = n(),\n    mean = NA_real_,\n    sd = NA_real_,\n    se = NA_real_\n  )\n\nb2 &lt;- NULL\n\nshow_plot(b2)\n\nNot done yet.\n\n\n\n\n\n\nTable 1: Group size, mean, sd and se.\n\n\n\n\n\n\ngroup\nn\nmean\nsd\nse\n\n\n\n\n\n\n\n\n\n\nWRITE (2–3 sentences): Pick two groups. Is the gap between their means big compared to the se? Compared to the sd? What does each comparison tell a reader?\n\n\nB3 · Zoom or filter?\nb3_table &lt;- b_data %&gt;%\n  count(group) %&gt;%\n  arrange(desc(n))\nb3_table\nb3_start &lt;- 0\n\nb3_counts &lt;- ggplot(b_data, aes(y = group)) +\n  geom_bar() +\n  labs(x = \"Count\", y = NULL)\n\nb3_zoom &lt;- NULL\nb3_filter &lt;- NULL\n\nb3_lie_factor &lt;-\n  ((max(b3_table$n) - b3_start) / (min(b3_table$n) - b3_start)) /\n  (max(b3_table$n) / min(b3_table$n))\nb3_lie_factor\nshow_plot(b3_zoom)\nshow_plot(b3_filter)\n\n\n\n\n\n# A tibble: 1 × 2\n  group          n\n  &lt;chr&gt;      &lt;int&gt;\n1 replace me 33289\n\n\n[1] 1\n\n\n\n\nNot done yet.\n\n\nNot done yet.\n\n\n\n\nFigure 5: Counts per group: zoomed and filtered.\n\n\n\nWRITE (2–3 sentences): The Lie Factor of your zoomed plot is 1. What would a reader conclude from each version? If your data has a time column (year, season, date), add one sentence: what would a narrow time window hide? (Compared to what?)\n\n\nB4 · Each group’s share of everyone with the outcome\n\nb4_shares &lt;- NULL\nb4 &lt;- NULL\n\nshow_plot(b4)\n\nNot done yet.\n\n\nWRITE (2 sentences): Compare with B1: same direction or not, and why."
+  },
+  {
+    "objectID": "reports/gp12_report.html#checks",
+    "href": "reports/gp12_report.html#checks",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "Checks",
+    "text": "Checks\n\n\n\n\nTable 2: Every task’s check, at the time this page was rendered.\n\n\n\n\n\n\ntask\nstatus\n\n\n\n\nA0\nTO DO\n\n\nA1\nTO DO\n\n\nA2\nTO DO\n\n\nA3\nTO DO\n\n\nA4\nTO DO\n\n\nB0\nTO DO\n\n\nB1\nTO DO\n\n\nB2\nTO DO\n\n\nB3\nTO DO\n\n\nB4\nTO DO"
+  },
+  {
+    "objectID": "reports/gp12_report.html#ai-use",
+    "href": "reports/gp12_report.html#ai-use",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "AI use",
+    "text": "AI use\nWRITE: one public line only: “AI use: I used [tool] to [what for].” or “AI use: none.” (Your AI log and conversations go in Blackboard, never here: Guided Project page, step 6.)"
+  },
+  {
+    "objectID": "reports/gp12_report.html#references",
+    "href": "reports/gp12_report.html#references",
+    "title": "Guided Project: Statistical Transformations and Coordinate Systems",
+    "section": "References",
+    "text": "References\nWRITE: APA references for your Fairness dataset (Fairlearn and the original source) and your Sports dataset (its SCORE page)."
   },
   {
     "objectID": "presentations/fairness_slides.html#question",
