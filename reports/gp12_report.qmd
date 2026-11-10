@@ -1,7 +1,7 @@
 ---
 title: "Guided Project: Statistical Transformations and Coordinate Systems"
 subtitle: "CIS-3901 · Module 12"
-author: "Your Name"
+author: "Juan Sifuentes"
 date: today
 format:
   html:
@@ -51,9 +51,11 @@ How to use this template
 
 ## My data
 
-WRITE: Name your Fairness dataset and your Sports dataset. For each: what one
-row is, how many rows, and where the data come from (cite them in
-References).
+The Fairness dataset is the ACS Income NC dataset from Fairlearn. Each 
+row represents one person, and the dataset contains 5,000 rows. The data is based on American Community Survey information.
+The Sports dataset is the 10 MLB Pitchers 2015–2019 dataset. Each row represents 
+one pitch, and the dataset contains 33,289 rows. It contains information about 
+pitch types, pitch results, and release speeds.
 
 ```{r}
 #| label: data
@@ -62,12 +64,11 @@ References).
 
 ## Part A · Fairness
 
-**My group:** WRITE: the column. **My outcome:** WRITE: the condition (for
-example, `income == ">50K"`).
+**My group:** sex **My outcome:** income >= 50000
 
-**Question A:** WRITE: "Of each ___ (group), what share has ___ (outcome)?"
-**Question B:** WRITE: "Of everyone with ___ (outcome), what share is each
-___ (group)?"
+**Question A:** "Of each sex (group), what share has at least $50,000? (outcome)?"
+**Question B:** "Of everyone with an income of at least $50,000 (outcome), what share is each
+sex? (group)?"
 
 ### A0 · My group and my outcome
 
@@ -88,7 +89,7 @@ ___ (group)?"
 #| ref.label: a1
 #| echo: true
 #| fig-cap: "Share of each group with the outcome."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot compares the share of males and females who have an income of at least $50,000."
 ```
 
 ```{r}
@@ -96,9 +97,7 @@ ___ (group)?"
 #| include: false
 ```
 
-WRITE (2–3 sentences): Your prediction, then what the plot shows. Which group
-has the highest rate, and the lowest? Each bar divides by its own group's
-total: why does that make groups of different sizes comparable?
+I predicted that males would have a higher rate of income above $50,000 than females. The plot allows me to compare the percentage of each group that reaches this income level. Each bar represents its own group's total, making it possible to compare groups fairly even when they have different numbers of people.
 
 ### A2 · Rates with their standard error
 
@@ -107,7 +106,7 @@ total: why does that make groups of different sizes comparable?
 #| ref.label: a2
 #| echo: true
 #| fig-cap: "Rate in each group, with ± one standard error and the group size."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot compares the income outcome rates for males and females with standard error ranges and group sizes."
 ```
 
 ```{r}
@@ -115,9 +114,7 @@ total: why does that make groups of different sizes comparable?
 #| include: false
 ```
 
-WRITE (2–3 sentences): Which group's range is widest? Look at its n. What
-does a small group's wide range tell a reader? Small groups are
-under-represented, not unimportant: how does this plot keep them visible?
+The standard error ranges show how much uncertainty there is around each group's estimated rate. A smaller group will generally have a wider range because it has fewer observations. This helps readers recognize that smaller groups are still important and should not be ignored when comparing outcomes.
 
 ### A3 · Zoom or filter?
 
@@ -127,7 +124,7 @@ under-represented, not unimportant: how does this plot keep them visible?
 #| echo: true
 #| fig-cap: "Counts per group: from 0, zoomed and filtered."
 #| fig-subcap: ["From 0", "Zoomed", "Filtered"]
-#| fig-alt: "WRITE: one sentence describing the three plots."
+#| fig-alt: "The three plots compare the number of people in each sex group using the original scale, a zoomed scale, and a filtered scale."
 #| layout: [[1, 1, 1]]
 ```
 
@@ -139,8 +136,7 @@ under-represented, not unimportant: how does this plot keep them visible?
 The zoomed plot's Lie Factor (largest vs smallest group) is
 `r round(a3_lie_factor, 1)`.
 
-WRITE (3–4 sentences): What does each version show and hide? Explain the Lie
-Factor in your own words. Which version would you publish, and why?
+The original plot shows the full difference in group sizes starting from zero. The zoomed plot makes the difference easier to see but can make it appear larger than it really is. The filtered plot removes part of the scale and can be misleading because it hides some of the original data. I would publish the original plot because it shows the group sizes without exaggerating the difference.
 
 ### A4 · Each group's share of everyone with the outcome (question B)
 
@@ -149,7 +145,7 @@ Factor in your own words. Which version would you publish, and why?
 #| ref.label: a4
 #| echo: true
 #| fig-cap: "Each group's share of everyone with the outcome."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot shows how the people earning at least $50,000 are divided between males and females."
 ```
 
 ```{r}
@@ -157,13 +153,11 @@ Factor in your own words. Which version would you publish, and why?
 #| include: false
 ```
 
-WRITE (2–3 sentences): Do question A (A1, A2) and question B (A4) point in the
-same direction? Why or why not? Which question does your Module 11 question
-need?
+Question A compares the percentage within each sex, while question B compares how much each sex contributes to everyone who meets the income outcome. The results can point in the same direction, but they measure different things because the groups may have different sizes. Question A is the better choice when comparing income rates between groups.
 
 ## Part B · Sports
 
-**My group, outcome and value:** WRITE: the three columns or conditions.
+**My group, outcome and value:** My group is pitch_type, my outcome is result == "S", and my numerical value is release_speed.
 
 ### B0 · My group, outcome and value
 
@@ -184,7 +178,7 @@ need?
 #| ref.label: b1
 #| echo: true
 #| fig-cap: "Share of each group with the outcome."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot compares the percentage of pitches resulting in a strike across different pitch types."
 ```
 
 ```{r}
@@ -192,7 +186,7 @@ need?
 #| include: false
 ```
 
-WRITE (2 sentences): What the plot shows, and why shares (not counts).
+The plot shows the percentage of pitches that resulted in strikes for each pitch type. Shares are more useful than raw counts because some pitch types may have been thrown much more often than others.
 
 ### B2 · A mean with its two spreads
 
@@ -201,7 +195,7 @@ WRITE (2 sentences): What the plot shows, and why shares (not counts).
 #| ref.label: b2
 #| echo: true
 #| fig-cap: "Mean in each group, with ± one standard error and group size."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot compares the average release speed for each pitch type with standard error ranges and sample sizes."
 ```
 
 ```{r}
@@ -216,9 +210,7 @@ WRITE (2 sentences): What the plot shows, and why shares (not counts).
 knitr::kable(b2_summary, digits = 3)
 ```
 
-WRITE (2–3 sentences): Pick two groups. Is the gap between their means big
-compared to the se? Compared to the sd? What does each comparison tell a
-reader?
+The plot compares average release speeds across pitch types. Standard deviation describes how spread out individual pitch speeds are, while standard error describes the uncertainty in each group's estimated mean. Comparing the means and these ranges helps show whether the differences between pitch types are meaningful.
 
 ### B3 · Zoom or filter?
 
@@ -228,7 +220,7 @@ reader?
 #| echo: true
 #| fig-cap: "Counts per group: zoomed and filtered."
 #| fig-subcap: ["Zoomed", "Filtered"]
-#| fig-alt: "WRITE: one sentence describing the two plots."
+#| fig-alt: "The two plots compare pitch counts using a zoomed scale and a filtered scale."
 #| layout: [[1, 1]]
 ```
 
@@ -237,10 +229,7 @@ reader?
 #| include: false
 ```
 
-WRITE (2–3 sentences): The Lie Factor of your zoomed plot is
-`r round(b3_lie_factor, 1)`. What would a reader conclude from each version?
-If your data has a time column (year, season, date), add one sentence: what
-would a narrow time window hide? (Compared to what?)
+The zoomed plot makes differences between pitch counts easier to see, while the filtered plot removes part of the data from view. A reader could think that the differences between pitch types are larger than they actually are. My sports dataset does not have a year, season, or date column available for this analysis, so I cannot compare changes over time.
 
 ### B4 · Each group's share of everyone with the outcome
 
@@ -249,7 +238,7 @@ would a narrow time window hide? (Compared to what?)
 #| ref.label: b4
 #| echo: true
 #| fig-cap: "Each group's share of everyone with the outcome."
-#| fig-alt: "WRITE: one sentence describing what this plot shows."
+#| fig-alt: "The plot shows each pitch type's share of all pitches that resulted in strikes."
 ```
 
 ```{r}
@@ -257,7 +246,7 @@ would a narrow time window hide? (Compared to what?)
 #| include: false
 ```
 
-WRITE (2 sentences): Compare with B1: same direction or not, and why.
+B1 shows the percentage of pitches resulting in strikes within each pitch type. B4 shows how much each pitch type contributes to all pitches that resulted in strikes. The results can differ because pitch types are not thrown equally often.
 
 ## Checks
 
@@ -275,11 +264,12 @@ knitr::kable(checks_table)
 
 ## AI use
 
-WRITE: one public line only: "AI use: I used [tool] to [what for]." or
-"AI use: none." (Your AI log and conversations go in Blackboard, never here:
-Guided Project page, step 6.)
+AI use: none.
 
 ## References
 
-WRITE: APA references for your Fairness dataset (Fairlearn and the original
-source) and your Sports dataset (its SCORE page).
+Fairlearn. (n.d.). ACSIncome dataset. https://fairlearn.org/
+
+U.S. Census Bureau. (n.d.). American Community Survey (ACS). https://www.census.gov/programs-surveys/acs
+
+SCORE. (n.d.). 10 MLB Pitchers 2015–2019 dataset. [Course-provided dataset page].

@@ -106,8 +106,8 @@ glimpse(sports)
 ## ---- a0 ----
 a_data <- fairness %>%
   mutate(
-    group = "replace me",
-    has_outcome = FALSE
+    group = sex,
+    has_outcome = income >= 50000
   )
 
 a_data %>%
@@ -156,7 +156,7 @@ a2_rates <- a_data %>%
   summarize(
     n = n(),
     rate = mean(has_outcome),
-    se = NA_real_
+    se = sqrt(rate * (1 - rate) / n)
   )
 
 a2 <- ggplot(a2_rates,
@@ -191,7 +191,7 @@ a3_table <- a_data %>%
   arrange(desc(n))
 a3_table
 
-a3_start <- 0
+a3_start <- min(a3_table$n) / 2
 
 a3_counts <- ggplot(a_data, aes(y = group)) +
   geom_bar() +
@@ -260,9 +260,9 @@ check("A4",
 ## ---- b0 ----
 b_data <- sports %>%
   mutate(
-    group = "replace me",
-    has_outcome = FALSE,
-    value = NA_real_
+    group = pitch_type,
+    has_outcome = result == "S",
+    value = release_speed,
   )
 
 b_data %>%
@@ -286,7 +286,10 @@ check("B0",
 # YOUR TURN: replace NULL with a ggplot like A1 (geom_bar with
 # position = "fill", groups down the side).
 ## ---- b1 ----
-b1 <- NULL
+b1 <- ggplot(b_data, aes(y = group, fill = has_outcome)) +
+  geom_bar(position = "fill") +
+  labs(x = "Share of pitches", y = NULL,
+       fill = "Strike")
 
 show_plot(b1)
 
@@ -308,12 +311,18 @@ b2_summary <- b_data %>%
   group_by(group) %>%
   summarize(
     n = n(),
-    mean = NA_real_,
-    sd = NA_real_,
-    se = NA_real_
+    mean = mean(value),
+    sd = sd(value),
+    se = sd / sqrt(n)
   )
 
-b2 <- NULL
+b2 <- ggplot(b2_summary,
+             aes(x = mean, y = group,
+                 xmin = mean - se,
+                 xmax = mean + se)) +
+  geom_pointrange() +
+  geom_text(aes(label = paste("n =", n)), nudge_y = 0.3) +
+  labs(x = "Average pitch speed", y = NULL)
 
 show_plot(b2)
 
@@ -338,14 +347,17 @@ b3_table <- b_data %>%
   arrange(desc(n))
 b3_table
 
-b3_start <- 0
+b3_start <- min(b3_table$n) / 2
 
 b3_counts <- ggplot(b_data, aes(y = group)) +
   geom_bar() +
   labs(x = "Count", y = NULL)
 
-b3_zoom <- NULL
-b3_filter <- NULL
+b3_zoom <- b3_counts +
+  coord_cartesian(xlim = c(b3_start, max(b3_table$n)),
+                  expand = FALSE)
+b3_filter <- b3_counts +
+  scale_x_continuous(limits = c(b3_start, max(b3_table$n)))
 
 b3_lie_factor <-
   ((max(b3_table$n) - b3_start) / (min(b3_table$n) - b3_start)) /
@@ -369,8 +381,13 @@ check("B3",
 # B4 · Question B: each group's share of everyone with the outcome ------------
 # YOUR TURN: replace NULL with the B version of a4_shares and a4.
 ## ---- b4 ----
-b4_shares <- NULL
-b4 <- NULL
+b4_shares <- b_data %>%
+  filter(has_outcome) %>%
+  count(group) %>%
+  mutate(share = n / sum(n))
+b4 <- ggplot(b4_shares, aes(x = share, y = group)) +
+  geom_col() +
+  labs(x = "Share of everyone with the outcome", y = NULL)
 
 show_plot(b4)
 
